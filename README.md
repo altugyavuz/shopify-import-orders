@@ -1,4 +1,4 @@
-# Laravel Application
+# Shopify Order List Application
 
 ## Table of Contents
 
@@ -45,9 +45,13 @@ To setup the project locally, follow these steps:
     ```
 
 2. **Install Dependencies**
-
+    Install composer dependencies:
     ```bash
     composer install
+    ```
+   
+    Install node packages and build it:
+    ```bash
     npm install && npm run build
     ```
 
@@ -78,3 +82,16 @@ To setup the project locally, follow these steps:
     ```bash
     php artisan horizon
     ```
+
+## Configuration
+
+The system can recognize Shopify credentials in two ways:
+
+1. By adding the following information to the Environment file during installation;
+   
+    ```
+    SHOPIFY_STORE_NAME="..."
+    SHOPIFY_API_KEY="..."
+    ```
+
+2. If you do not add any data to the environment file, you will see a setup screen the first time you run the project. You can continue by entering the necessary information on this screen.

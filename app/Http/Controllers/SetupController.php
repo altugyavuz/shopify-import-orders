@@ -16,11 +16,11 @@ class SetupController extends Controller
      */
     public function index()
     {
-        // $checkSetup = $this->checkSetupIsDone();
+        $checkSetup = $this->checkSetupIsDone();
 
-        // if ($checkSetup) {
-        //     return redirect()->route('dashboard');
-        // }
+        if ($checkSetup) {
+            return redirect()->route('dashboard');
+        }
 
         return Inertia::render('Setup/SaveStoreInfo');
     }
@@ -32,15 +32,15 @@ class SetupController extends Controller
     public function saveCredentials(Request $request)
     {
         $request->validate([
-            'store_alias'  => 'required',
-            'store_name'   => 'required',
-            'access_token' => 'required',
+            'store_alias'   => 'required',
+            'store_name'    => 'required',
+            'store_api_key' => 'required',
         ]);
 
         // Check information is correct
         $checkInformation = $this->checkStoreInformation(
             $request->input('store_name'),
-            $request->input('access_token')
+            $request->input('store_api_key')
         );
 
         // If information is not correct or not authorized return redirect back with errors
@@ -54,7 +54,7 @@ class SetupController extends Controller
             $request->only([
                 'store_alias',
                 'store_name',
-                'access_token',
+                'store_api_key',
             ]),
         );
         // Mark setup is completed

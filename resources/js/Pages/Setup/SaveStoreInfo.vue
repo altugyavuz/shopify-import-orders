@@ -11,7 +11,7 @@ import InputError from "@/Components/InputError.vue";
 const form = useForm({
   store_alias: '',
   store_name: '',
-  access_token: '',
+  store_api_key: '',
 });
 
 const submit = () => {
@@ -64,15 +64,15 @@ const submit = () => {
         </div>
 
         <div class="mt-4">
-          <JetLabel for="access_token" value="Access Token"/>
+          <JetLabel for="store_api_key" value="Store API Key"/>
           <JetInput
-              id="access_token"
-              v-model="form.access_token"
+              id="store_api_key"
+              v-model="form.store_api_key"
               type="text"
               class="mt-1 block w-full"
               required
           />
-          <InputError :message="form.errors.access_token" class="mt-2" />
+          <InputError :message="form.errors.store_api_key" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

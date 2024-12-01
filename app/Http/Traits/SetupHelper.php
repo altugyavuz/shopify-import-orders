@@ -3,12 +3,14 @@
 namespace App\Http\Traits;
 
 use App\Http\Services\ShopifyService;
+use App\Models\StoreSetting;
 use Illuminate\Support\Facades\Redis;
 
 trait SetupHelper
 {
 
     private string $storeSetupKey = "welcome:store:setup";
+    private string $storeSetupCheckKey = "welcome:store:setup_check";
     /**
      * @param string $storeName
      * @param string $accessToken
@@ -32,7 +34,21 @@ trait SetupHelper
      */
     public function checkSetupIsDone(): ?string
     {
-        return Redis::get($this->storeSetupKey);
+        if (Redis::get($this->storeSetupCheckKey) && Redis::get($this->storeSetupKey)) {
+            return "1";
+        } else {
+            $configCheck = null !== config('shopify_service.store_api_key') && null !== config('shopify_service.store_api_key');
+            $storeInfo = StoreSetting::first();
+            $storeCheck = $storeInfo && $storeInfo->store_name && $storeInfo->store_api_key;
+
+            if ($configCheck || $storeCheck) {
+                Redis::set($this->storeSetupCheckKey, 1, 60 * 60 * 3);
+
+                return "1";
+            } else {
+                return null;
+            }
+        }
     }
 
     /**
@@ -40,6 +56,6 @@ trait SetupHelper
      */
     public function markSetupIsDone(): void
     {
-        Redis::set($this->storeSetupKey, 1);
+        Redis::set($this->storeSetupKey, 1, 60 * 60 * 24 * 5);
     }
 }

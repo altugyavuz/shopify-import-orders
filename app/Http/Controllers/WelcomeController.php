@@ -19,9 +19,11 @@ class WelcomeController extends Controller
         } else {
             $storeSettings = StoreSetting::first();
 
-            if ($storeSettings) {
+            if (!$storeSettings) {
                 return redirect()->route('setup.index')->with('message', 'Please complete the setup process to continue.');
             } else {
+                $this->markSetupIsDone();
+
                 return redirect()->route('dashboard');
             }
         }
