@@ -5,6 +5,7 @@
 1. [Project Overview](#project-overview)
 2. [Technology Stack](#technology-stack)
 3. [Environment Setup](#environment-setup)
+4. [Configuration](#configuration)
 
 ## Project Overview
 
